@@ -6,18 +6,25 @@ cd $(dirname $0)
 
 unset PID
 
-source env.sh
+if [ -f env.sh ]; then
+  source env.sh
+else
+  echo "env.sh not found"
+  exit 1
+fi
 
-docker volume create openfortinet-vpn-root >/dev/null
-docker volume create openfortinet-vpn-ssh >/dev/null
-docker volume create openfortinet-vpn-home >/dev/null
+docker volume create openfortinet-vpn-root
+docker volume create openfortinet-vpn-ssh
+docker volume create openfortinet-vpn-home
 
 while true; do
-  docker rm -f openfortinet 2>/dev/null
 
-  docker run --rm --privileged --name openfortinet-vpn -p 2020:22 \
+  docker rm -f openfortinet-vpn || :
+  docker run --rm --privileged --name openfortinet-vpn \
+    -p 127.0.0.1:2020:22 \
     -e SSH_USER=$SSH_USER \
     -e SSH_USER_PASS=$SSH_USER_PASS \
+    -e USERID=$USERID \
     -e VPN_USER=$VPN_USER \
     -e VPN_PASS=$VPN_PASS \
     -e VPN_HOST=$VPN_HOST \
@@ -26,8 +33,10 @@ while true; do
     -v openfortinet-vpn-home:/home \
     -v openfortinet-vpn-root:/root \
     -v openfortinet-vpn-ssh:/etc/ssh \
+    -v $HOME/.ssh:/home/$SSH_USER/.ssh:ro \
+    -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf \
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
-    docker-openfortinet-vpn
+    docker-openfortinet-vpn >vpn.log &
 
   disconnect=no
   while true; do
@@ -37,14 +46,12 @@ while true; do
         echo -ne '\rConnected!'
         ssh dockerproxy -TN
         disconnect=yes
-      else
-        progress
       fi
 
       if [ $disconnect = yes ]; then
         break
       fi
-    done < vpn.log
+    done <vpn.log
 
     if [ $disconnect = yes ]; then
       break

@@ -18,10 +18,11 @@ docker volume create openfortinet-vpn-ssh
 docker volume create openfortinet-vpn-home
 
 docker rm -f openfortinet-vpn || :
-
 docker run --rm --privileged -it --name openfortinet-vpn \
+  -p 127.0.0.1:2020:22 \
   -e SSH_USER=$SSH_USER \
   -e SSH_USER_PASS=$SSH_USER_PASS \
+  -e USERID=$USERID \
   -e VPN_USER=$VPN_USER \
   -e VPN_PASS=$VPN_PASS \
   -e VPN_HOST=$VPN_HOST \
@@ -30,6 +31,7 @@ docker run --rm --privileged -it --name openfortinet-vpn \
   -v openfortinet-vpn-home:/home \
   -v openfortinet-vpn-root:/root \
   -v openfortinet-vpn-ssh:/etc/ssh \
+  -v $HOME/.ssh:/home/$SSH_USER/.ssh:ro \
   -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf \
   -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
-  docker-openfortinet-vpn
+  docker-openfortinet-vpn "$@"

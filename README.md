@@ -2,8 +2,7 @@
 
 # Openfortinet VPN Client docker 
 
-**[Build](#build)** | **[Test](#test)** |
-**[Run](#run)** 
+**[Build](#build)** | **[Test](#test)** | **[Run](#run)** 
 
 ### build
 ```
