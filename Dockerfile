@@ -50,6 +50,8 @@ COPY entry.sh /
 COPY requirements.txt /
 COPY create-profile.sh /
 COPY create_profile.py /
+COPY user_mods.sh.example /
+COPY config/resolv.conf.1 /etc/resolv.conf.1
 
 # install pip
 RUN apt install -y python3-distutils \
