@@ -17,6 +17,7 @@ docker volume create openfortinet-vpn-root
 docker volume create openfortinet-vpn-ssh
 docker volume create openfortinet-vpn-home
 
+docker pull theshellland/docker-openfortinet-vpn || :
 docker rm -f openfortinet-vpn || :
 docker run --rm --privileged -it --name openfortinet-vpn \
   -e SSH_USER=$SSH_USER \
@@ -32,4 +33,4 @@ docker run --rm --privileged -it --name openfortinet-vpn \
   -v openfortinet-vpn-ssh:/etc/ssh \
   -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
   -v $(pwd)/../../net/ssh:/ssh:ro \
-  docker-openfortinet-vpn "$@"
+  theshellland/docker-openfortinet-vpn "$@"
