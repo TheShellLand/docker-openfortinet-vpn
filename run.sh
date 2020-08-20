@@ -11,7 +11,7 @@ else
   exit 1
 fi
 
-set -ex
+set -e
 
 docker volume create openfortinet-vpn-root
 docker volume create openfortinet-vpn-ssh
@@ -32,6 +32,6 @@ docker run --rm --privileged -it --name openfortinet-vpn \
   -v openfortinet-vpn-root:/root \
   -v openfortinet-vpn-ssh:/etc/ssh \
   -v $HOME/.ssh:/home/$SSH_USER/.ssh:ro \
-  -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf \
+  -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
   -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
   docker-openfortinet-vpn "$@"

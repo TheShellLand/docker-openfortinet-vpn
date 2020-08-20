@@ -33,9 +33,9 @@ while true; do
     -v openfortinet-vpn-home:/home \
     -v openfortinet-vpn-root:/root \
     -v openfortinet-vpn-ssh:/etc/ssh \
-    -v $HOME/.ssh:/home/$SSH_USER/.ssh:ro \
-    -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf \
+    -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
+    -v $(pwd)/../../net/ssh:/ssh:ro \
     docker-openfortinet-vpn >vpn.log &
 
   disconnect=no
@@ -59,6 +59,8 @@ while true; do
   done
 
   PID=$!
-  read -p ""
+  echo -ne "\n\n\n"
+  read -p "Press any key to restart "
   kill "$PID" || killall docker-proxy.sh
+  echo -ne "\n\n\n"
 done
