@@ -19,6 +19,8 @@ docker volume create openfortinet-vpn-home
 
 docker pull theshellland/docker-openfortinet-vpn || :
 
+if [ -f vpn.log ]; then rm -v vpn.log; fi
+
 while true; do
 
   docker rm -f openfortinet-vpn || :
@@ -39,6 +41,8 @@ while true; do
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
     -v $(pwd)/../../net/ssh:/ssh:ro \
     theshellland/docker-openfortinet-vpn >vpn.log &
+
+  until [ -f vpn.log ]; do sleep 1; done
 
   disconnect=no
   while true; do
