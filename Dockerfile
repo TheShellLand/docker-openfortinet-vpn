@@ -15,7 +15,7 @@ RUN apt install -y openssh-server
 RUN apt install -y openvpn easy-rsa
 
 # Installs tools
-RUN apt install -y git wget curl vim
+RUN apt install -y git wget curl vim rsync
 
 # Install OpenFortiGUI
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 2FAB19E7CCB7F415 \
