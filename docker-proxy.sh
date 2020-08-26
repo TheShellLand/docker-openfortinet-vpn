@@ -23,7 +23,7 @@ if [ -f vpn.log ]; then rm -v vpn.log; fi
 
 while true; do
 
-  docker rm -f openfortinet-vpn || :
+  docker rm -f openfortinet-vpn 2>/dev/null || :
   docker run --rm --privileged --name openfortinet-vpn \
     -p 127.0.0.1:2020:22 \
     -e SSH_USER=$SSH_USER \
@@ -49,7 +49,7 @@ while true; do
     while read log; do
       check="Tunnel is up and running."
       if [[ "$log" == *"$check"* ]]; then
-        echo -ne '\rConnected!'
+        echo -ne '\n\nConnected!'
         ssh dockerproxy -TN
         disconnect=yes
       fi
@@ -67,6 +67,6 @@ while true; do
   PID=$!
   echo -ne "\n\n\n"
   read -p "Press any key to restart "
-  kill "$PID" || killall docker-proxy.sh
+  kill "$PID" 2>/dev/null || killall docker-proxy.sh 2>/dev/null
   echo -ne "\n\n\n"
 done
