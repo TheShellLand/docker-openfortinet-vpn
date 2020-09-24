@@ -15,6 +15,7 @@ useradd -m -s /bin/bash $SSH_USER -u $USERID\
 if [ -d /ssh ]; then
   rm -rf /home/$SSH_USER/.ssh || :
   cp -r /ssh /home/$SSH_USER/.ssh
+  chmod -R o=,g= /home/$SSH_USER/.ssh
   chown -R $SSH_USER:$SSH_USER /home/$SSH_USER
 fi
 
