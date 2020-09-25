@@ -39,7 +39,7 @@ while true; do
     -v openfortinet-vpn-ssh:/etc/ssh \
     -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
-    -v $(pwd)/../../net/ssh:/ssh:ro \
+    -v $HOME/.ssh:/ssh:ro \
     theshellland/docker-openfortinet-vpn >vpn.log &
 
   until [ -f vpn.log ]; do sleep 1; done
