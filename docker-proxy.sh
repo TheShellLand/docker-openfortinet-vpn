@@ -4,6 +4,8 @@
 
 cd $(dirname $0)
 
+DOCKERIMAGE=theshellland/docker-openfortinet-vpn
+
 unset PID
 
 if [ -f env.sh ]; then
@@ -17,7 +19,7 @@ docker volume create openfortinet-vpn-root
 docker volume create openfortinet-vpn-ssh
 docker volume create openfortinet-vpn-home
 
-docker pull theshellland/docker-openfortinet-vpn || :
+docker pull $DOCKERIMAGE || :
 
 if [ -f vpn.log ]; then rm -v vpn.log; fi
 
@@ -40,7 +42,7 @@ while true; do
     -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
     -v $HOME/.ssh:/ssh:ro \
-    theshellland/docker-openfortinet-vpn >vpn.log &
+    $DOCKERIMAGE >vpn.log &
 
   until [ -f vpn.log ]; do sleep 1; done
 
@@ -57,11 +59,13 @@ while true; do
       if [ $disconnect = yes ]; then
         break
       fi
+      sleep 1
     done <vpn.log
 
     if [ $disconnect = yes ]; then
       break
     fi
+    sleep 1
   done
 
   PID=$!

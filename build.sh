@@ -5,7 +5,7 @@
 cd $(dirname $0)
 
 DOCKERFILE="Dockerfile"
-DOCKERNAME=docker-openfortinet-vpn
+DOCKERNAME=theshellland/docker-openfortinet-vpn
 DOCKERTAG=$(git describe --tags --always)
 
 

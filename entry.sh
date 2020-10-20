@@ -4,7 +4,7 @@
 
 cd $(dirname $0)
 
-set -xe
+set -e
 
 # Create user
 useradd -m -s /bin/bash $SSH_USER -u $USERID\
@@ -31,6 +31,8 @@ fi
 
 # Fix permissions
 cp -v /etc/resolv.conf.1 /etc/resolv.conf
+
+set -x
 
 # Start services
 service ssh start
