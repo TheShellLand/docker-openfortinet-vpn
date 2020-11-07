@@ -26,6 +26,7 @@ if [ -f vpn.log ]; then rm -v vpn.log; fi
 while true; do
 
   docker rm -f openfortinet-vpn 2>/dev/null || :
+
   docker run --rm --privileged --name openfortinet-vpn \
     -p 127.0.0.1:2020:22 \
     -e SSH_USER=$SSH_USER \
@@ -42,7 +43,9 @@ while true; do
     -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
     -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
     -v $HOME/.ssh:/ssh:ro \
-    $DOCKERIMAGE >vpn.log &
+    $DOCKERIMAGE | tee vpn.log &
+
+  PID=$!
 
   until [ -f vpn.log ]; do sleep 1; done
 
@@ -68,9 +71,9 @@ while true; do
     sleep 1
   done
 
-  PID=$!
   echo -ne "\n\n\n"
   read -p "Press any key to restart "
-  kill "$PID" 2>/dev/null || killall docker-proxy.sh 2>/dev/null
+  kill "$PID" 2>/dev/null
+  #kill "$PID" 2>/dev/null || killall docker-proxy.sh 2>/dev/null
   echo -ne "\n\n\n"
 done

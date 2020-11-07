@@ -39,9 +39,14 @@ service ssh start
 service openvpn start
 
 # Update ca certs
-update-ca-certificates
+update-ca-certificates -v | grep cdn1
 
 # Start vpn
-openfortivpn -c $CONFIG
+if [ "$1" == "-v" ]; then
+  openfortivpn -v -c $CONFIG
+else
+  openfortivpn -c $CONFIG
+fi
 
-exec "$@"
+exec $@
+

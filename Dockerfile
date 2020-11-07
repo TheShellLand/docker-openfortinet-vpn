@@ -70,4 +70,4 @@ EXPOSE 22
 
 CMD ["/bin/bash"]
 
-ENTRYPOINT ["/entry.sh"]
+ENTRYPOINT ["/bin/bash", "/entry.sh"]
