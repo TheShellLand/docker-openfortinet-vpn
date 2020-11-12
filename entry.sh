@@ -22,8 +22,6 @@ fi
 # Install user mods
 if [ -f user_mods.sh ]; then
   /bin/bash /user_mods.sh
-else
-  cp -v /user_mods.sh.example /user_mods.sh
 fi
 
 # Create vpn config

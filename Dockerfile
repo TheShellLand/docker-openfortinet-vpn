@@ -50,7 +50,7 @@ COPY entry.sh /
 COPY requirements.txt /
 COPY create-profile.sh /
 COPY create_profile.py /
-COPY user_mods.sh.example /
+COPY user_mods.sh.example /user_mods.sh
 COPY config/resolv.conf.1 /etc/resolv.conf.1
 
 # install pip
