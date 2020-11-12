@@ -13,11 +13,6 @@ if [ ! -f "$DOCKERFILE" ]; then echo "*** $DOCKERFILE not found ***"; exit 1; fi
 if [ ! $(which docker) ]; then echo "*** please install docker ***"; exit 1; fi
 
 
-# create required files
-if [ ! -f user_mods.sh ]; then
-  cp user_mods.sh.example user_mods.sh
-fi
-
 set -ex
 
 # build image
