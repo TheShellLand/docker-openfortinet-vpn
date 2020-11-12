@@ -59,6 +59,9 @@ RUN apt install -y python3-distutils \
     && python3 "get-pip.py" \
     && pip3 install -r requirements.txt
 
+# install user mods
+RUN /bin/bash /user_mods.sh
+
 VOLUME ["/etc/ssh"]
 VOLUME ["/root"]
 VOLUME ["/home"]

@@ -19,11 +19,6 @@ if [ -d /ssh ]; then
   chown -R $SSH_USER:$SSH_USER /home/$SSH_USER
 fi
 
-# Install user mods
-if [ -f user_mods.sh ]; then
-  /bin/bash /user_mods.sh
-fi
-
 # Create vpn config
 /bin/bash /create-profile.sh
 
