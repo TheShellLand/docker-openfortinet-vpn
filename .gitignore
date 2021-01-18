@@ -1,5 +1,4 @@
 .idea/
 env.sh
-user_mods.sh
 vpn.log
 *.crt
