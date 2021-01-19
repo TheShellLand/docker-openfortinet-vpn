@@ -40,8 +40,8 @@ while true; do
     -v openfortinet-vpn-home:/home \
     -v openfortinet-vpn-root:/root \
     -v openfortinet-vpn-ssh:/etc/ssh \
-    -v $(pwd)/config/resolv.conf.1:/etc/resolv.conf.1 \
-    -v $(pwd)/ca-certificates:/usr/local/share/ca-certificates \
+    -v "$(pwd)"/config/resolv.conf.1:/etc/resolv.conf.1 \
+    -v "$(pwd)"/ca-certificates:/usr/local/share/ca-certificates \
     -v $HOME/.ssh:/ssh:ro \
     $DOCKERIMAGE | tee vpn.log &
 
