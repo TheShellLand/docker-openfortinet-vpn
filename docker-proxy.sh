@@ -27,16 +27,8 @@ while true; do
 
   docker rm -f openfortinet-vpn 2>/dev/null || :
 
-  docker run --rm --privileged --name openfortinet-vpn \
+  docker run --rm --privileged --env-file env.sh --name openfortinet-vpn \
     -p 127.0.0.1:2020:22 \
-    -e SSH_USER=$SSH_USER \
-    -e SSH_USER_PASS=$SSH_USER_PASS \
-    -e USERID=$USERID \
-    -e VPN_USER=$VPN_USER \
-    -e VPN_PASS=$VPN_PASS \
-    -e VPN_HOST=$VPN_HOST \
-    -e VPN_TRUSTED_CERT=$VPN_TRUSTED_CERT \
-    -e CONFIG=$CONFIG \
     -v openfortinet-vpn-home:/home \
     -v openfortinet-vpn-root:/root \
     -v openfortinet-vpn-ssh:/etc/ssh \
